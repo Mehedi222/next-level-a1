@@ -106,3 +106,75 @@ const myBook: Book = {
 };
 
 printBookDetails(myBook);
+
+
+
+
+
+
+
+function contains(array: (number | string)[], value: number | string): boolean {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] === value) {
+            return true;
+        }
+    }
+    return false;
+}
+function getUniqueValues(array1: (number | string)[], array2: (number | string)[]): (number | string)[] {
+    const uniqueValues: (number | string)[] = [];;
+    for (let i = 0; i < array1.length; i++) {
+        const value = array1[i];
+        if (!contains(uniqueValues, value)) {
+            uniqueValues.push(value);
+        }
+    }
+    for (let i = 0; i < array2.length; i++) {
+        const value = array2[i];
+        if (!contains(uniqueValues, value)) {
+            uniqueValues.push(value);
+        }
+    }
+
+    return uniqueValues;
+}
+
+
+const array1 = [1, 2, 3, 4, 5];
+const array2 = [3, 4, 5, 6, 7];
+console.log(getUniqueValues(array1, array2));
+
+
+
+
+
+
+
+interface Product {
+    name: string;
+    price: number;
+    quantity: number;
+    discount?: number;
+}
+
+
+function calculateTotalPrice(products: Product[]): number {
+    const totalPrice = products.reduce((total, product) => {
+        let producTotal: number;
+        if (typeof product.discount === "number" && product.discount > 0) {
+            const discountMultiplier = 1 - product.discount / 100;
+            producTotal = (product.price * product.quantity) * discountMultiplier;
+        } else {
+            producTotal = product.price * product.quantity;
+        }
+        return total + producTotal;
+    }, 0);
+    return totalPrice;
+}
+const products = [
+    { name: 'Pen', price: 10, quantity: 2 },
+    { name: 'Notebook', price: 25, quantity: 3, discount: 10 },
+    { name: 'Bag', price: 50, quantity: 1, discount: 20 },
+];
+
+console.log(calculateTotalPrice(products));
