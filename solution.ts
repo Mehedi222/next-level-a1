@@ -1,28 +1,57 @@
 function formatValue(value: number | string | boolean): string {
     if (typeof value === "string") {
-        return value.toUpperCase();
+        let result = "";
+        const lower = "abcdefghijklmnopqrstuvwxyz";
+        const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (let i = 0; i < value.length; i++) {
+            const char = value[i];
+            let islower = false;
+            for (let j = 0; j < lower.length; j++) {
+                if (char === lower[j]) {
+                    result += upper[j];
+                    islower = true;
+                    break;
+                }
+                if (!islower && char === upper[j]) {
+                    result += lower[j];
+                    break;
+                }
+            }
+        }
+        return result;
     } else if (typeof value === "number") {
-        return String(value * 10);
+        return "" + (value * 10);
     } else if (typeof value === "boolean") {
         return value ? "TRUE" : "FALSE";
     } else {
-        return "UNKNOWN TYPE";
+        return "Unknown type";
     }
 }
-console.log(formatValue("hello"));
+
+
+
+console.log(formatValue('hello'));
 console.log(formatValue(5));
 console.log(formatValue(true));
-console.log(formatValue(false));
+
+
+
+
+
+
+
+
+
+
+
 
 
 function getLength(input: string | any[]): number {
-    if (Array.isArray(input)) {
-        return input.length;
-    } else if (typeof input === "string") {
-        return input.length;
-    } else {
-        return 0;
+    let length = 0;
+    while (input[length] !== undefined) {
+        length++;
     }
+    return length;
 }
 console.log(getLength('typescript'));
 console.log(getLength([10, 20, 30, 40]));
@@ -30,7 +59,8 @@ console.log(getLength([10, 20, 30, 40]));
 
 
 
-class person {
+
+class Person {
     name: string;
     age: number;
     constructor(name: string, age: number) {
@@ -38,14 +68,25 @@ class person {
         this.age = age;
     }
     getDetails(): string {
-        return `Name: ${this.name}, Age: ${this.age}`;
+        return `'Name: ${this.name}, Age: ${this.age}'`;
     }
 }
-const person1 = new person('John Doe', 30);
+const person1 = new Person('John Doe', 30);
 console.log(person1.getDetails());
 
-const person2 = new person('Alice', 25);
+const person2 = new Person('Alice', 25);
 console.log(person2.getDetails());
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -54,7 +95,13 @@ interface Item {
     rating: number;
 }
 function filterByRating(items: Item[]): Item[] {
-    return items.filter(item => item.rating >= 4);
+    const filteredItems: Item[] = [];
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].rating >= 4.0) {
+            filteredItems[filteredItems.length] = items[i];
+        }
+    }
+    return filteredItems;
 }
 const books = [
     { title: 'Book A', rating: 4.5 },
@@ -69,14 +116,29 @@ console.log(filterByRating(books));
 
 
 
-interface user {
+
+
+
+
+
+
+
+
+
+
+interface User {
     id: number | string;
     name: string;
     email: string;
     isActive: boolean;
 }
-function filterActiveUsers(users: user[]): user[] {
-    const activeUsers: user[] = users.filter(u => u.isActive);
+function filterActiveUsers(users: User[]): User[] {
+    const activeUsers: User[] = [];
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].isActive) {
+            activeUsers[activeUsers.length] = users[i];
+        }
+    }
     return activeUsers;
 }
 const users = [
@@ -88,15 +150,24 @@ const users = [
 console.log(filterActiveUsers(users));
 
 
+
+
+
+
+
+
+
+
+
 interface Book {
     title: string;
     author: string;
     PublishedYear: number;
     isAvailable: boolean;
 }
-function printBookDetails(books: Book): void {
-    const availability = books.isAvailable ? "yes" : "No";
-    console.log(`Title: ${books.title}, Author: ${books.author}, Published Year: ${books.PublishedYear}, Available: ${availability}`);
+function printBookDetails(book: Book): void {
+    const availability = book.isAvailable ? "yes" : "No";
+    console.log(`Title: ${book.title}, Author: ${book.author}, Published Year: ${book.PublishedYear}, Available: ${availability}`);
 }
 const myBook: Book = {
     title: 'The Great Gatsby',
@@ -113,6 +184,11 @@ printBookDetails(myBook);
 
 
 
+
+
+
+
+
 function contains(array: (number | string)[], value: number | string): boolean {
     for (let i = 0; i < array.length; i++) {
         if (array[i] === value) {
@@ -122,27 +198,35 @@ function contains(array: (number | string)[], value: number | string): boolean {
     return false;
 }
 function getUniqueValues(array1: (number | string)[], array2: (number | string)[]): (number | string)[] {
-    const uniqueValues: (number | string)[] = [];;
+    const uniqueValues: (number | string)[] = [];
     for (let i = 0; i < array1.length; i++) {
         const value = array1[i];
         if (!contains(uniqueValues, value)) {
-            uniqueValues.push(value);
+            uniqueValues[uniqueValues.length] = value;
         }
     }
     for (let i = 0; i < array2.length; i++) {
         const value = array2[i];
         if (!contains(uniqueValues, value)) {
-            uniqueValues.push(value);
+            uniqueValues[uniqueValues.length] = value;
         }
     }
 
     return uniqueValues;
 }
 
-
 const array1 = [1, 2, 3, 4, 5];
 const array2 = [3, 4, 5, 6, 7];
 console.log(getUniqueValues(array1, array2));
+
+
+
+
+
+
+
+
+
 
 
 
@@ -156,7 +240,6 @@ interface Product {
     quantity: number;
     discount?: number;
 }
-
 
 function calculateTotalPrice(products: Product[]): number {
     const totalPrice = products.reduce((total, product) => {
