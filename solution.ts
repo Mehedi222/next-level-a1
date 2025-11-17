@@ -65,3 +65,44 @@ const books = [
 console.log(filterByRating(books));
 
 
+
+
+
+
+interface user {
+    id: number | string;
+    name: string;
+    email: string;
+    isActive: boolean;
+}
+function filterActiveUsers(users: user[]): user[] {
+    const activeUsers: user[] = users.filter(u => u.isActive);
+    return activeUsers;
+}
+const users = [
+    { id: 1, name: 'Rakib', email: 'rakib@example.com', isActive: true },
+    { id: 2, name: 'Asha', email: 'asha@example.com', isActive: false },
+    { id: 3, name: 'Rumi', email: 'rumi@example.com', isActive: true },
+];
+
+console.log(filterActiveUsers(users));
+
+
+interface Book {
+    title: string;
+    author: string;
+    PublishedYear: number;
+    isAvailable: boolean;
+}
+function printBookDetails(books: Book): void {
+    const availability = books.isAvailable ? "yes" : "No";
+    console.log(`Title: ${books.title}, Author: ${books.author}, Published Year: ${books.PublishedYear}, Available: ${availability}`);
+}
+const myBook: Book = {
+    title: 'The Great Gatsby',
+    author: 'F. Scott Fitzgerald',
+    PublishedYear: 1925,
+    isAvailable: true,
+};
+
+printBookDetails(myBook);
